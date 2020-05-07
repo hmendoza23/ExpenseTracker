@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /* View model for car details must be made in the activity so fragments get all the same view model */
-        CarDetailsViewModel viewModel = new ViewModelProvider(this).get(CarDetailsViewModel.class);
+
 
         /* Set up for the drawer style navigation */
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -71,30 +70,17 @@ public class MainActivity extends AppCompatActivity {
             isLoggedIn = false;
         }
 
-        /* Determines the size of the screen
-        * and decides what nav host fragment to use */
-        int screensize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
-        int homeId;
 
-        final NavController navController;
 
-        if(screensize == Configuration.SCREENLAYOUT_SIZE_LARGE || screensize == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
-            homeId = R.id.nav_big_screen;
-            navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.mobile_navigation2);
-            navController.setGraph(navGraph);
-        }
-        else{
-            homeId = R.id.nav_home;
-            navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.mobile_navigation);
-            navController.setGraph(navGraph);
-        }
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.mobile_navigation);
+        navController.setGraph(navGraph);
+
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                homeId, R.id.nav_login,R.id.nav_signup,R.id.logout)
+                R.id.nav_home, R.id.nav_login,R.id.nav_signup,R.id.logout)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -102,18 +88,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         /* Navigates to the proper place depending on screen size and login status */
-        if(screensize == Configuration.SCREENLAYOUT_SIZE_LARGE || screensize == Configuration.SCREENLAYOUT_SIZE_XLARGE){
-            if(isLoggedIn) {
-                navController.navigate(R.id.nav_big_screen);
-            }
-            else
-                navController.navigate(R.id.nav_login);
-        }else{
-            if(isLoggedIn)
-                navController.navigate(R.id.nav_home);
-            else
-                navController.navigate(R.id.nav_login);
-        }
+        if(isLoggedIn)
+            navController.navigate(R.id.nav_home);
+        else
+            navController.navigate(R.id.nav_login);
+
 
         /* log out button functionality*/
         logOut.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

@@ -25,11 +25,7 @@
         android:label="signup"
         tools:layout="@layout/fragment_signup"/>
 
-    <fragment
-        android:id="@+id/nav_car_details"
-        android:name="com.example.carprojecthw2.CarDetailsFragment"
-        android:label="carDetails"
-        tools:layout="@layout/fragment_car_details"/>
+
 
 
 </navigation>
