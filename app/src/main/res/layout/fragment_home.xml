@@ -2,38 +2,76 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/carMake"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintStart_toStartOf="parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="206dp"
+        android:layout_height="37dp"
+        android:text="LET'S BEGIN TO BUDGET!"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="10dp"
-        />
+        app:layout_constraintVertical_bias="0.046" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/carModel"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+    <EditText
+        android:id="@+id/annualSalary"
+        android:layout_width="217dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="492dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:hint="Enter your annual salary:"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/carMake"
-        android:layout_marginTop="10dp"
-        />
+        app:layout_constraintHorizontal_bias="0.438"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/carList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:isScrollContainer="true"
-            app:layout_constraintTop_toBottomOf="@id/carModel"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"/>
+    <EditText
+        android:id="@+id/dailyExpense"
+        android:layout_width="257dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Enter your max daily expense:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.441"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/annualSalary"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/desiredSavings"
+        android:layout_width="263dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="364dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Amount I want to save:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dailyExpense"
+        app:layout_constraintVertical_bias="0.727" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Budget Me!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
