@@ -27,8 +27,10 @@ public class Budget extends Fragment {
     private TextView calcExpenseChangeable;
     private TextView savingsTxt;
     private EditText hopefulSaving;
-    private TextView calcSavingTxt;
-    private TextView calcSavingChangeable;
+    private TextView calcWantedSavingTxt;
+    private TextView calcWantedSavingChangeable;
+    private TextView calcExpectedSavingTxt;
+    private TextView calcExpectedSavingChangeable;
     private Button calculate;
 
 
@@ -50,8 +52,12 @@ public class Budget extends Fragment {
 
         savingsTxt = root.findViewById(R.id.savingTxt);
         hopefulSaving = root.findViewById(R.id.desiredSavings);
-        calcSavingTxt = root.findViewById(R.id.calcWantedSavingTxt);
-        calcSavingChangeable = root.findViewById(R.id.calcWantedSavingChangeable);
+        calcWantedSavingTxt = root.findViewById(R.id.calcWantedSavingTxt);
+        calcWantedSavingChangeable = root.findViewById(R.id.calcWantedSavingChangeable);
+        calcExpectedSavingTxt = root.findViewById(R.id.calcExpectedSavingTxt);
+        calcExpectedSavingChangeable = root.findViewById(R.id.calcExpectedSavingChangeable);
+
+
 
         calculate = root.findViewById(R.id.button);
 
@@ -77,9 +83,13 @@ public class Budget extends Fragment {
 
                     calcSalaryChangeable.setText(salary);
                     calcExpenseChangeable.setText(expense);
-                    calcSavingChangeable.setText(String.valueOf(annualSavingCalculated));
+                    calcWantedSavingChangeable.setText(savings);
+                    calcExpectedSavingChangeable.setText(String.valueOf(annualSavingCalculated));
 
+                    if(annualSavingCalculated < savings){
+                        calcExpectedSavingChangeable.setTextColor(Color.RED);
 
+                    }
 
                 }
 
