@@ -15,7 +15,11 @@
             android:id="@+id/nav_signup"
             android:title="Signup"/>
         <item
+            android:id="@+id/budget_frag"
+            android:title="Budget"/>
+        <item
             android:id="@+id/logout"
             android:title="log out"/>
+
     </group>
 </menu>

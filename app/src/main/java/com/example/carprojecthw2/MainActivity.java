@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem login = menu.findItem(R.id.nav_login);
         MenuItem signUp = menu.findItem(R.id.nav_signup);
         MenuItem logOut = menu.findItem(R.id.logout);
+        MenuItem Budget = menu.findItem(R.id.budget_frag);
 
 
         /* All stuff to check if the user is already logged in and what/what not to show the user depending on that */
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_login,R.id.nav_signup,R.id.logout)
+                R.id.nav_home, R.id.nav_login,R.id.nav_signup, R.id.budget_frag , R.id.logout)
                 .setDrawerLayout(drawer)
                 .build();
 
