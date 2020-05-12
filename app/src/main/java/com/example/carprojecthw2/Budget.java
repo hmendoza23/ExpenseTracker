@@ -85,6 +85,8 @@ public class Budget extends Fragment {
 
                     if(annualSavingCalculated < savings){
                         calcExpectedSavingChangeable.setTextColor(Color.RED);
+                    }else{
+                        calcExpectedSavingChangeable.setTextColor(Color.GREEN);
                     }
 
                 }
