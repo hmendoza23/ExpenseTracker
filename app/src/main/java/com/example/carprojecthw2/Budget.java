@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import org.w3c.dom.Text;
 
 public class Budget extends Fragment {
 
@@ -38,7 +37,7 @@ public class Budget extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.fragment_signup, container, false);
+        final View root = inflater.inflate(R.layout.fragment_budget, container, false);
 
         salaryTxt = root.findViewById(R.id.salaryTxt);
         annualSalary = root.findViewById(R.id.annualSalary);
@@ -57,9 +56,7 @@ public class Budget extends Fragment {
         calcExpectedSavingTxt = root.findViewById(R.id.calcExpectedSavingTxt);
         calcExpectedSavingChangeable = root.findViewById(R.id.calcExpectedSavingChangeable);
 
-
-
-        calculate = root.findViewById(R.id.button);
+        calculate = root.findViewById(R.id.budgetButton);
 
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,25 +78,20 @@ public class Budget extends Fragment {
                     float dailyBudget = salary/365;
                     float annualSavingCalculated = (dailyBudget - expense)*365;
 
-                    calcSalaryChangeable.setText(salary);
-                    calcExpenseChangeable.setText(expense);
-                    calcWantedSavingChangeable.setText(savings);
+                    calcSalaryChangeable.setText(String.valueOf(salary));
+                    calcExpenseChangeable.setText(String.valueOf(expense));
+                    calcWantedSavingChangeable.setText(String.valueOf(savings));
                     calcExpectedSavingChangeable.setText(String.valueOf(annualSavingCalculated));
 
                     if(annualSavingCalculated < savings){
                         calcExpectedSavingChangeable.setTextColor(Color.RED);
-
                     }
 
                 }
 
+
             }
         });
-
-
-
-
-
 
 
         return root;

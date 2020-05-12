@@ -25,6 +25,12 @@
         android:label="signup"
         tools:layout="@layout/fragment_signup"/>
 
+    <fragment
+        android:id="@+id/budget_frag"
+        android:name="com.example.carprojecthw2.Budget"
+        android:label = "budget"
+        tools:layout="@layout/fragment_budget"/>
+
 
 
 

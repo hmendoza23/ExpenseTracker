@@ -18,7 +18,11 @@
             android:id="@+id/nav_settings"
             android:title="Settings"/>
         <item
+            android:id="@+id/budget_frag"
+            android:title="Budget"/>
+        <item
             android:id="@+id/logout"
             android:title="log out"/>
+
     </group>
 </menu>
