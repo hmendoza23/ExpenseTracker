@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="206dp"
+        android:layout_height="37dp"
+        android:text="LET'S BEGIN TO BUDGET!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046" />
+
+    <TextView
+        android:id="@+id/salaryTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Annual Salary"
+        app:layout_constraintStart_toStartOf="@+id/annualSalary"
+        app:layout_constraintBottom_toTopOf="@+id/annualSalary"
+        />
+
+
+    <EditText
+        android:id="@+id/annualSalary"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:hint="99999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/expenseTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max Daily Expense"
+        app:layout_constraintStart_toStartOf="@+id/dailyExpense"
+        app:layout_constraintBottom_toTopOf="@+id/dailyExpense"/>
+
+
+    <EditText
+        android:id="@+id/dailyExpense"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="250"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/annualSalary"/>
+
+
+    <TextView
+        android:id="@+id/savingTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Desired Savings"
+        app:layout_constraintStart_toStartOf="@+id/desiredSavings"
+        app:layout_constraintBottom_toTopOf="@+id/desiredSavings"/>
+
+    <EditText
+        android:id="@+id/desiredSavings"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Amount I want to save:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dailyExpense"
+         />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Budget Me!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/calcSalaryTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salary: "
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".65"
+        app:layout_constraintHorizontal_bias=".4"/>
+
+    <TextView
+        android:id="@+id/calcSalaryChangeable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/calcSalaryTxt"
+        app:layout_constraintTop_toTopOf="@+id/calcSalaryTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/calcSalaryTxt" />
+
+    <TextView
+        android:id="@+id/calcExpenseTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Daily Expenses: "
+        app:layout_constraintTop_toBottomOf="@+id/calcSalaryTxt"
+        app:layout_constraintEnd_toEndOf="@+id/calcSalaryTxt"/>
+
+    <TextView
+        android:id="@+id/calcExpenseChangeable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="@+id/calcExpenseTxt"
+        app:layout_constraintStart_toEndOf="@+id/calcExpenseTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/calcExpenseTxt"/>
+
+    <TextView
+        android:id="@+id/calcWantedSavingTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Desired Saving: "
+        app:layout_constraintEnd_toEndOf="@+id/calcExpenseTxt"
+        app:layout_constraintTop_toBottomOf="@id/calcExpenseTxt"/>
+
+    <TextView
+        android:id="@+id/calcWantedSavingChangeable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/calcWantedSavingTxt"
+        app:layout_constraintTop_toTopOf="@id/calcWantedSavingTxt"
+        app:layout_constraintBottom_toBottomOf="@id/calcWantedSavingTxt"/>
+
+    <TextView
+        android:id="@+id/calcExpectedSavingTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Expected Saving: "
+        app:layout_constraintEnd_toEndOf="@+id/calcWantedSavingTxt"
+        app:layout_constraintTop_toBottomOf="@id/calcWantedSavingTxt"/>
+
+    <TextView
+        android:id="@+id/calcExpectedSavingChangeable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/calcExpectedSavingTxt"
+        app:layout_constraintTop_toTopOf="@id/calcExpectedSavingTxt"
+        app:layout_constraintBottom_toBottomOf="@id/calcExpectedSavingTxt"/>
+
+    <Button
+        android:id="@+id/saveBudget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Keep budget"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calcExpectedSavingTxt"
+        android:layout_marginTop="15dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
