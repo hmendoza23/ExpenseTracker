@@ -30,8 +30,11 @@
         android:name="com.example.carprojecthw2.Budget"
         android:label = "budget"
         tools:layout="@layout/fragment_budget"/>
-
-
+    <activity
+        android:id="@+id/graphs"
+        android:name="com.example.carprojecthw2.Graphs"
+        android:label="activity_graphs"
+        tools:layout="@layout/activity_graphs" />
 
 
 </navigation>
