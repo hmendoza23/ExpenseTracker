@@ -23,9 +23,12 @@ public class HomeFragment extends Fragment {
 
             dailyBudgetChart = root.findViewById(R.id.dailyBudgetChart);
 
+
             dailyBudgetChart.setDrawHoleEnabled(true);
             dailyBudgetChart.setHoleRadius(80);
             dailyBudgetChart.setHoleColor(Color.WHITE);
+
+
 
 
 
