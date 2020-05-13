@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem home = menu.findItem(R.id.nav_home);
         MenuItem login = menu.findItem(R.id.nav_login);
         MenuItem signUp = menu.findItem(R.id.nav_signup);
+        MenuItem settings = menu.findItem(R.id.nav_settings);
         MenuItem logOut = menu.findItem(R.id.logout);
         MenuItem Budget = menu.findItem(R.id.budget_frag);
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             home.setVisible(true);
             login.setVisible(false);
             signUp.setVisible(false);
+            settings.setVisible(true);
             String user = mPrefs.getString("User", null);
             userTxt.setText(user);
             isLoggedIn = true;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             home.setVisible(false);
             login.setVisible(true);
             signUp.setVisible(true);
+            settings.setVisible(false);
             logOut.setVisible(false);
             isLoggedIn = false;
         }
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_login,R.id.nav_signup, R.id.budget_frag , R.id.logout)
+                R.id.nav_home, R.id.nav_login,R.id.nav_signup,R.id.nav_settings, R.id.budget_frag, R.id.logout)
                 .setDrawerLayout(drawer)
                 .build();
 
