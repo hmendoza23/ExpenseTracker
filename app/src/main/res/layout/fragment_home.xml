@@ -16,6 +16,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        app:layout_constraintStart_toEndOf="@id/dailyBudgetChart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dailyBudgetChart"
+        app:layout_constraintBottom_toBottomOf="@id/dailyBudgetChart"/>
+
+    <TextView
+        android:id="@+id/todaysSpendingTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Today's Expenses"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dailyBudgetChart"
+        android:layout_marginTop="15dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dailySpendingRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/todaysSpendingTxt"/>
+
+    <TextView
+        android:id="@+id/emptyRecyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/todaysSpendingTxt"
+        android:layout_marginTop="10dp"/>
+
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/savingsProgress"
         android:layout_width="300dp"
@@ -23,7 +62,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyBudgetChart"
+        app:layout_constraintTop_toBottomOf="@+id/dailySpendingRecyclerView"
         android:layout_marginTop="50dp"/>
 
     <com.github.mikephil.charting.charts.LineChart
@@ -38,12 +77,13 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/spendCardView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="190dp"
         app:cardCornerRadius="25dp"
         app:contentPadding="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="parent"
+        app:cardElevation="40dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,9 +92,41 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Spend"
+                android:text="Spending"
                 android:textSize="20sp"
                 android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amount"
+                app:layout_constraintStart_toStartOf="@+id/addingExpenseChangeable"
+                app:layout_constraintEnd_toEndOf="@id/addingExpenseChangeable"
+                app:layout_constraintBottom_toTopOf="@id/addingExpenseChangeable"/>
+
+            <EditText
+                android:id="@+id/addingExpenseChangeable"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:hint="52.24"
+                android:inputType="numberDecimal"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias=".4"/>
+
+            <Button
+                android:id="@+id/spendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spend"
+                app:layout_constraintStart_toStartOf="@id/addingExpenseChangeable"
+                app:layout_constraintEnd_toEndOf="@id/addingExpenseChangeable"
+                app:layout_constraintTop_toBottomOf="@id/addingExpenseChangeable"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
