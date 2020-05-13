@@ -16,24 +16,24 @@
     <fragment
         android:id="@+id/nav_login"
         android:name="com.example.carprojecthw2.LoginFragment"
-        android:label="login"
+        android:label="Login"
         tools:layout="@layout/fragment_login"/>
 
     <fragment
         android:id="@+id/nav_signup"
         android:name="com.example.carprojecthw2.SignupFragment"
-        android:label="signup"
+        android:label="Sign up"
         tools:layout="@layout/fragment_signup"/>
 
     <fragment
         android:id="@+id/budget_frag"
         android:name="com.example.carprojecthw2.Budget"
-        android:label = "budget"
+        android:label = "Budget"
         tools:layout="@layout/fragment_budget"/>
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.carprojecthw2.Settings"
-        android:label = "settings"
+        android:label = "Settings"
         tools:layout="@layout/fragment_settings"/>
     <activity
         android:id="@+id/graphs"
