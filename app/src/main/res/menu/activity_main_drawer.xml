@@ -13,16 +13,17 @@
             android:title="Login"/>
         <item
             android:id="@+id/nav_signup"
-            android:title="Signup"/>
-        <item
-            android:id="@+id/nav_settings"
-            android:title="Settings"/>
+            android:title="Sign Up"/>
+
         <item
             android:id="@+id/budget_frag"
             android:title="Budget"/>
         <item
+            android:id="@+id/nav_settings"
+            android:title="Settings"/>
+        <item
             android:id="@+id/logout"
-            android:title="log out"/>
+            android:title="Log Out"/>
 
     </group>
 </menu>
