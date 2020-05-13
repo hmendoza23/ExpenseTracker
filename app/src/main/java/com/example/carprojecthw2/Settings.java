@@ -42,9 +42,24 @@ public class Settings extends Fragment {
             }
         });
 
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        resetData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent reStart = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(reStart);
                 //Settings.this.finish();
