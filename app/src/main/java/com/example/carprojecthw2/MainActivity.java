@@ -103,19 +103,22 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.nav_login);
 
 
+        /**
+         *  logOut.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+         *             @Override
+         *             public boolean onMenuItemClick(MenuItem item) {
+         *                 editor.remove("loggedIn");
+         *                 editor.putBoolean("loggedIn", false);
+         *                 editor.apply();
+         *                 Intent reStart = new Intent(getApplicationContext(), MainActivity.class);
+         *                 startActivity(reStart);
+         *                 MainActivity.this.finish();
+         *                 return false;
+         *             }
+         *         });
+         */
         /* log out button functionality*/
-        logOut.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                editor.remove("loggedIn");
-                editor.putBoolean("loggedIn", false);
-                editor.apply();
-                Intent reStart = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(reStart);
-                MainActivity.this.finish();
-                return false;
-            }
-        });
+
 
 
     }
