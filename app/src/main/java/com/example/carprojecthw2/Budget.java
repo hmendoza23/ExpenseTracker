@@ -1,5 +1,7 @@
 package com.example.carprojecthw2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +14,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 
 public class Budget extends Fragment {
@@ -31,7 +36,9 @@ public class Budget extends Fragment {
     private TextView calcExpectedSavingTxt;
     private TextView calcExpectedSavingChangeable;
     private Button calculate;
+    private Button saveBudget;
 
+    private HomeViewModel homeViewModel;
 
 
     @Override
@@ -57,6 +64,9 @@ public class Budget extends Fragment {
         calcExpectedSavingChangeable = root.findViewById(R.id.calcExpectedSavingChangeable);
 
         calculate = root.findViewById(R.id.budgetButton);
+        saveBudget = root.findViewById(R.id.saveBudget);
+
+        homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +98,34 @@ public class Budget extends Fragment {
                     }else{
                         calcExpectedSavingChangeable.setTextColor(Color.GREEN);
                     }
-
                 }
+            }
+        });
 
 
+        saveBudget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float dailyExpenseMax = Float.parseFloat(calcExpenseChangeable.getText().toString());
+                float desiredSavings = Float.parseFloat(calcExpectedSavingChangeable.getText().toString());
+
+                SharedPreferences mPrefs = getActivity().getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
+
+                float todaysSpendings = mPrefs.getFloat("todaysSpendings", 0);
+                float currentSavings = mPrefs.getFloat("currentSavings", 0);
+
+                SharedPreferences.Editor prefEditor = mPrefs.edit();
+
+                prefEditor.putFloat("dailyExpenseMax", dailyExpenseMax);
+                prefEditor.putFloat("desiredSavings", desiredSavings);
+
+                homeViewModel.setDailyExpenseMax(dailyExpenseMax);
+                homeViewModel.setTodaysSpendings(todaysSpendings);
+                homeViewModel.setDesiredSavings(desiredSavings);
+                homeViewModel.setCurrentSavings(currentSavings);
+
+                NavController navController = Navigation.findNavController(getActivity().findViewById(R.id.nav_host_fragment));
+                navController.navigate(R.id.nav_home);
             }
         });
 
