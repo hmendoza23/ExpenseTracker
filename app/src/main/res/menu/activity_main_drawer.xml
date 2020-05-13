@@ -22,6 +22,9 @@
             android:id="@+id/nav_settings"
             android:title="Settings"/>
         <item
+            android:id="@+id/nav_graphs"
+            android:title="Graphs"/>
+        <item
             android:id="@+id/logout"
             android:title="Log Out"/>
 
