@@ -2,16 +2,12 @@ package com.example.carprojecthw2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,7 +18,6 @@ public class Settings extends Fragment {
     private Button changePassword;
     private Button resetData;
     private Button logoutButton;
-
 
 
     @Override
@@ -36,6 +31,8 @@ public class Settings extends Fragment {
         logoutButton = root.findViewById(R.id.logout);
 
         changeEmail.setOnClickListener(new View.OnClickListener() {
+            SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            final SharedPreferences.Editor editor = mPrefs.edit();
             @Override
             public void onClick(View v) {
 
@@ -56,18 +53,22 @@ public class Settings extends Fragment {
             }
         });
 
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
+            SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            final SharedPreferences.Editor editor = mPrefs.edit();
+
             @Override
             public void onClick(View v) {
-
+                editor.remove("loggedIn");
+                editor.putBoolean("loggedIn", false);
+                editor.apply();
                 Intent reStart = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(reStart);
-                //Settings.this.finish();
+
             }
+
         });
-
-
-
 
 
     // Inflate the layout for this fragment
