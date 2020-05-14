@@ -118,6 +118,8 @@ public class Budget extends Fragment {
 
                 prefEditor.putFloat("dailyExpenseMax", dailyExpenseMax);
                 prefEditor.putFloat("desiredSavings", desiredSavings);
+                prefEditor.putBoolean("isBudgetSetup", true);
+                prefEditor.commit();
 
                 homeViewModel.setDailyExpenseMax(dailyExpenseMax);
                 homeViewModel.setTodaysSpendings(todaysSpendings);

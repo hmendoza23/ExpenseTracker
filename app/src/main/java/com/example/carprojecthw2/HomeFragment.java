@@ -21,11 +21,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment {
@@ -36,6 +45,8 @@ public class HomeFragment extends Fragment {
     private Button addExpenseButton;
 
     private RecyclerView dailySpendingRecyclerView;
+    private MyAdapter myAdapter;
+    private ArrayList<Expenses> expensesList = new ArrayList<>();
     private TextView emptyRecyclerView;
 
     private ProgressBar savingsProgress;
@@ -54,11 +65,29 @@ public class HomeFragment extends Fragment {
 
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
+        float todaysRemainingFunds = homeViewModel.getTodaysRemainingFunds().getValue();
+        float todaysSpending = homeViewModel.getTodaysSpending().getValue();
+        float todaysOverage = homeViewModel.getTodaysOverage().getValue();
+
+        List<PieEntry> pieEntries = new ArrayList<>();
+        pieEntries.add(new PieEntry(todaysRemainingFunds, "Left for Today"));
+        pieEntries.add(new PieEntry(todaysSpending, "Spent Today"));
+        pieEntries.add(new PieEntry(todaysOverage, "Overage Today"));
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Today's Spending");
+        List<Integer> colors = new ArrayList<>();
+        colors.add(Color.GREEN);
+        colors.add(Color.LTGRAY);
+        colors.add(Color.RED);
+        dataSet.setColors(colors);
+        PieData data = new PieData(dataSet);
 
         dailyBudgetChart = root.findViewById(R.id.dailyBudgetChart);
         dailyBudgetChart.setDrawHoleEnabled(true);
         dailyBudgetChart.setHoleRadius(80);
         dailyBudgetChart.setHoleColor(Color.WHITE);
+
+        dailyBudgetChart.setData(data);
 
         addExpenseButton = root.findViewById(R.id.add);
 
@@ -117,7 +146,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v){
                 if(spendingAmount.getText().toString().matches("(\\d*\\.?\\d{0,2})")){
-                    homeViewModel.decreaseTodaysSpending(Float.parseFloat(spendingAmount.getText().toString()));
+                    homeViewModel.increaseTodaysSpending(Float.parseFloat(spendingAmount.getText().toString()));
+                    homeViewModel.decreaseTodaysRemainingFunds(Float.parseFloat(spendingAmount.getText().toString()));
                 }else{
                     Toast.makeText(getActivity(),"Incorrect Format: Example: XX.XX", Toast.LENGTH_LONG).show();
                 }
@@ -126,7 +156,7 @@ public class HomeFragment extends Fragment {
 
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view, final int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(R.string.app_name);
                 builder.setMessage("Are you sure you want to remove the class?");
@@ -149,6 +179,20 @@ public class HomeFragment extends Fragment {
         };
 
 
+        dailySpendingRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
+        dailySpendingRecyclerView.setLayoutManager(layoutManager);
+        myAdapter = new MyAdapter(getContext(), expensesList, listener);
+        dailySpendingRecyclerView.setAdapter(myAdapter);
+
+        homeViewModel.getTodaysSpending().observe(getViewLifecycleOwner(), new Observer<Float>() {
+            @Override
+            public void onChanged(Float aFloat) {
+
+            }
+        });
+
+
 
 
 
@@ -160,7 +204,8 @@ public class HomeFragment extends Fragment {
     }
 
     public void remove(int position){
-
+        expensesList.remove(position);
+        myAdapter.notifyDataSetChanged();
     }
 
 }
