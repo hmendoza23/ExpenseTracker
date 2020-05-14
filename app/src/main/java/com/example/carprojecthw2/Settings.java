@@ -65,7 +65,7 @@ public class Settings extends Fragment {
                 editor.apply();
                 Intent reStart = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(reStart);
-
+                getActivity().finish();
             }
 
         });
