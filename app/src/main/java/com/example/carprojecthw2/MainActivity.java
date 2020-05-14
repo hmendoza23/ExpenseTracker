@@ -1,5 +1,6 @@
 package com.example.carprojecthw2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -97,8 +98,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         /* Navigates to the proper place depending on screen size and login status */
-        if(isLoggedIn)
-            navController.navigate(R.id.nav_home);
+        if(isLoggedIn) {
+            SharedPreferences mPrefs2 = getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
+            if(mPrefs2.getBoolean("isBudgetSetup", false))
+                navController.navigate(R.id.nav_home);
+            else
+                navController.navigate(R.id.budget_frag);
+        }
         else
             navController.navigate(R.id.nav_login);
 

@@ -8,6 +8,10 @@ public class Expenses {
     private float amount;
     private int position;
 
+    public Expenses(String reason, float amount){
+        this.reason = reason;
+        this.amount = amount;
+    }
 
     public void setReason(String reason){ this.reason = reason; }
     public void setAmount(float amount){ this.amount = amount; }
