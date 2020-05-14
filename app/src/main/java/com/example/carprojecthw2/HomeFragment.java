@@ -31,9 +31,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -43,6 +47,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 
 
 public class HomeFragment extends Fragment {
@@ -122,9 +129,53 @@ public class HomeFragment extends Fragment {
 
 
         spendingHistory = root.findViewById(R.id.budgetHistory);
+        ArrayList<Entry> values = new ArrayList<>();
+        HashMap<String, Float> moneyData = new HashMap<>();
+        SharedPreferences history = getActivity().getSharedPreferences("com.example.ExpenseTracker.budgetHistory", Context.MODE_PRIVATE);
+        Gson gson1 = new Gson();
+        Map<String, ?> keys = history.getAll();
+
+        for(String name : keys.keySet()) {
+            String json = keys.get(name).toString();
+
+            String todayValue = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date()).substring(0,6);
+
+            if(name.contains(todayValue)){
+                HashMap<String, String> data = gson1.fromJson(json, new TypeToken<HashMap<String, String>>(){}.getType());
+
+                float remaining = Float.parseFloat(Objects.requireNonNull(data.get("remainingFunds")));
+                float overage = Float.parseFloat(Objects.requireNonNull(data.get("overage")));
+
+                moneyData.put(name, remaining-overage);
+            }
+
+        }
+
+        // TreeMap to store values of HashMap
+        TreeMap<String, Float> sorted = new TreeMap<>();
+
+        // Copy all data from hashMap into TreeMap
+        sorted.putAll(moneyData);
+
+        HashMap<String,Float> sortedData = new HashMap<>();
+        // Display the TreeMap which is naturally sorted
+        int a = 1;
+        for (Map.Entry<String, Float> entry : sorted.entrySet()) {
+            sortedData.put(entry.getKey(), entry.getValue());
+            values.add(new Entry(a, entry.getValue()));
+                    a++;
+        }
+
+        for(int j = 0; j < 10; j ++){
+            values.add(new Entry(j,(j*10)%15));
+        }
+
+        LineDataSet lineDataSet = new LineDataSet(values, "Month");
+        LineData lineData = new LineData(lineDataSet);
+        spendingHistory.setData(lineData);
+
 
         spendingCardView = root.findViewById(R.id.spendCardView);
-
         spendingAmount = root.findViewById(R.id.addingExpenseChangeable);
         spend = root.findViewById(R.id.spendButton);
 
