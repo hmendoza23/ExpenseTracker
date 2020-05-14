@@ -25,6 +25,8 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
+import static android.content.Intent.getIntent;
+
 
 public class Settings extends Fragment {
     private Button changeEmail;
@@ -33,11 +35,13 @@ public class Settings extends Fragment {
     private Button logoutButton;
     private Button chgnPass;
     private EditText newPassTxt;
+    private EditText confirmnewPass;
 
     private CardView changeEmailCardView;
     private CardView changePasswordCardView;
     private TextView txtEmail;
     private TextView retrievedEmailTxt;
+    private TextView txtNewpassTxt;
     private EditText newEmailEntered;
     private Button emailChangeBtn;
 
@@ -60,6 +64,15 @@ public class Settings extends Fragment {
         chgnPass = root.findViewById(R.id.confirm_change_pass_button);
         newPassTxt = root.findViewById(R.id.newPass);
         changePasswordCardView = root.findViewById(R.id.passwordCardView);
+        confirmnewPass = root.findViewById(R.id.newPassConfirm);
+        txtNewpassTxt = root.findViewById(R.id.newPassConfirmTxt);
+
+        final EditText username = root.findViewById(R.id.username);
+        final EditText email = root.findViewById(R.id.email);
+        //retrievedEmailTxt.setText(email.getText().toString());
+
+
+
 
 
 
@@ -70,13 +83,27 @@ public class Settings extends Fragment {
                 animator.translationX(changeEmailCardView.getWidth());
                 animator.setDuration(500);
                 animator.start();
+
+                String user = username.getText().toString();
+
+
+                final HashMap dictionary = new HashMap<>();
+                SharedPreferences emails = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
+                dictionary.putAll(emails.getAll());
+                if(dictionary.containsKey(user)){
+                    System.out.println(user);
+                }
             }
         });
 
         final float x[] = new float[2];
         changeEmailCardView.setOnTouchListener(new View.OnTouchListener() {
+
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
+
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         x[0] = event.getX();
@@ -90,17 +117,18 @@ public class Settings extends Fragment {
                             animate.setDuration(500);
                             animate.start();
                         }
+
                         break;
 
                     default:
                 }
+
+
+
                 return true;
             }
 
 
-            public void onCLick(View v){
-                String retEmail = retrievedEmailTxt.getText().toString();
-            }
 
 
         });
@@ -108,6 +136,7 @@ public class Settings extends Fragment {
 
         /* set functionality of the update email button inside the card view **/
         emailChangeBtn.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v){
                 boolean goodToSubmit = true;
@@ -161,13 +190,13 @@ public class Settings extends Fragment {
         });
 
         changePassword.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 ViewPropertyAnimator animator = changePasswordCardView.animate();
                 animator.translationX(changePasswordCardView.getWidth());
                 animator.setDuration(500);
                 animator.start();
-
             }
         });
 
@@ -197,6 +226,54 @@ public class Settings extends Fragment {
             }
 
 
+        });
+
+        chgnPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean goodToSubmit = true;
+                int errorCount = 0;
+                String error = new String();
+                String pass = newPassTxt.getText().toString();
+                String rePass = confirmnewPass.getText().toString();
+
+                if (!pass.equals(rePass)) {
+                    txtNewpassTxt.setTextColor(Color.RED);
+                    goodToSubmit = false;
+                    errorCount++;
+                    error = "Passwords do not match";
+                }
+
+                if (errorCount == 1) {
+                    Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+
+                }
+
+                if (goodToSubmit) {
+
+                    /* closes the keyboard **/
+                    confirmnewPass.onEditorAction(EditorInfo.IME_ACTION_DONE);
+
+                    final HashMap dictionary = new HashMap<>();
+                    SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor dbEditor = db.edit();
+                    dictionary.putAll(db.getAll());
+
+                    if (dictionary.containsKey(retrievedEmailTxt.getText().toString())) {
+                        //dbEditor.putString(newEmailString);
+                        dbEditor.commit();
+                        // dbEditor.putString(user, pass);
+
+                    }
+
+
+                    Intent reStart = new Intent(getActivity(), MainActivity.class);
+                    startActivity(reStart);
+                    getActivity().finish();
+
+                }
+            }
         });
 
 

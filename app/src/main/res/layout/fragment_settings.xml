@@ -88,7 +88,7 @@
                 android:id="@+id/retrievedEmail"
                 android:layout_width="271dp"
                 android:layout_height="45dp"
-                android:text="retrievedf"
+                android:hint="email should be retireved"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -147,13 +147,13 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/passwordCardView"
         android:layout_width="416dp"
-        android:layout_height="227dp"
+        android:layout_height="330dp"
         android:layout_marginBottom="216dp"
         app:cardCornerRadius="25dp"
         app:contentPadding="15dp"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/update_email_button"
+        app:layout_constraintTop_toTopOf="@id/update_email_button"
         tools:layout_editor_absoluteY="114dp"
         app:cardElevation="40dp"
         android:clickable="true">
@@ -187,10 +187,38 @@
                 android:inputType="textPassword"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.164"
+                app:layout_constraintHorizontal_bias="0.124"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.497" />
+                app:layout_constraintVertical_bias="0.190" />
+
+            <TextView
+                android:id="@+id/newPassConfirmTxt"
+                android:layout_width="220dp"
+                android:layout_height="32dp"
+                android:text="Reenter new password:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.124"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.400" />
+
+            <EditText
+                android:id="@+id/newPassConfirm"
+                android:layout_width="271dp"
+                android:layout_height="45dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.124"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.470" />
 
             <Button
                 android:id="@+id/confirm_change_pass_button"
@@ -199,10 +227,10 @@
                 android:text="Update Password"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintHorizontal_bias="0.450"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.973" />
+                app:layout_constraintVertical_bias="0.680" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
