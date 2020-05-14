@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Enter your salary, daily expenses and desired savings to start budgeting", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_about:
-                Toast.makeText(this, "An app to help you budget! ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "An app to help you budget!", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

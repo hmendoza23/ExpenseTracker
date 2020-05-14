@@ -31,8 +31,11 @@ public class Settings extends Fragment {
     private Button changePassword;
     private Button resetData;
     private Button logoutButton;
+    private Button chgnPass;
+    private EditText newPassTxt;
 
     private CardView changeEmailCardView;
+    private CardView changePasswordCardView;
     private TextView txtEmail;
     private TextView retrievedEmailTxt;
     private EditText newEmailEntered;
@@ -54,6 +57,10 @@ public class Settings extends Fragment {
         emailChangeBtn = root.findViewById(R.id.confirm_update_email_button);
         txtEmail = root.findViewById(R.id.emailTxt);
         retrievedEmailTxt = root.findViewById(R.id.retrievedEmail);
+        chgnPass = root.findViewById(R.id.confirm_change_pass_button);
+        newPassTxt = root.findViewById(R.id.newPass);
+        changePasswordCardView = root.findViewById(R.id.passwordCardView);
+
 
 
         changeEmail.setOnClickListener(new View.OnClickListener() {
@@ -156,9 +163,42 @@ public class Settings extends Fragment {
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ViewPropertyAnimator animator = changePasswordCardView.animate();
+                animator.translationX(changePasswordCardView.getWidth());
+                animator.setDuration(500);
+                animator.start();
 
             }
         });
+
+
+        final float x1[] = new float[2];
+        changePasswordCardView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        x1[0] = event.getX();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        x1[1] = event.getX();
+                        if ((x1[0] - x1[1]) > 300) {
+                            ViewPropertyAnimator animate = changePasswordCardView.animate();
+                            animate.translationX(-changePasswordCardView.getWidth());
+                            animate.setDuration(500);
+                            animate.start();
+                        }
+                        break;
+
+                    default:
+                }
+                return true;
+            }
+
+
+        });
+
 
         resetData.setOnClickListener(new View.OnClickListener() {
             @Override
