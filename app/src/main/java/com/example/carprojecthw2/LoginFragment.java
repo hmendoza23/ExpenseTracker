@@ -25,6 +25,7 @@ public class LoginFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState){
         final View root = inflater.inflate(R.layout.fragment_login, container, false);
 
+
         final EditText username = root.findViewById(R.id.username);
         final TextView userTxt = root.findViewById(R.id.userTxt);
         final EditText password = root.findViewById(R.id.password);
@@ -43,11 +44,19 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
+                System.out.println("Email: " + user);
+                TextView retrievedEmailTxt = (TextView) v.findViewById(R.id.retrievedEmail);
+                //retrievedEmailTxt.setText("My Awesome Text");
+
 
                 if(dictionary.containsKey(user)){
                     if(dictionary.get(user).toString().equals(pass)){
+                        System.out.println("prints password: " + dictionary.get(user).toString());
+                        //System.out.println("Pass: " + dictionary.get(pass).toString());
+
                         editorLog.putBoolean("loggedIn", true);
                         editorLog.commit();
+
                         Intent reStart = new Intent(getActivity(), MainActivity.class);
                         startActivity(reStart);
                         getActivity().finish();

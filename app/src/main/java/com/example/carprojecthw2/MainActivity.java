@@ -119,8 +119,16 @@ public class MainActivity extends AppCompatActivity {
 
 
             float currentSavings = mPrefs2.getFloat("currentSavings", 0f);
-            currentSavings = currentSavings + mPrefs2.getFloat("todaysRemainingFunds", 0f);
+            if(mPrefs2.getFloat("todaysOverage", 0) > 0){
+                currentSavings -= mPrefs2.getFloat("todaysOverage", 0);
+            }else{
+                currentSavings += mPrefs2.getFloat("todaysRemainingFunds", 0f);
+            }
 
+            if(currentSavings < 0){
+                homeViewModel.setDailyExpenseMax((mPrefs2.getFloat("annualSalary",0) + currentSavings)/365);
+                homeViewModel.setDesiredSavings(0);
+            }
 
             editor2.remove("todaysRemainingFunds");
             editor2.remove("todaysSpending");

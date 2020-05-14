@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dailyBudgetChart"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="30dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dailySpendingRecyclerView"
@@ -69,7 +69,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dailySpendingRecyclerView"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="30dp"/>
 
 
     <androidx.core.widget.ContentLoadingProgressBar
@@ -159,6 +159,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="25dp"/>
 
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/expenseReasonSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/addingExpenseChangeable"
+                app:layout_constraintTop_toTopOf="@id/addingExpenseChangeable"
+                app:layout_constraintBottom_toBottomOf="@id/addingExpenseChangeable"/>
+
             <EditText
                 android:id="@+id/addingExpenseChangeable"
                 android:layout_width="95dp"
@@ -166,7 +175,7 @@
                 android:hint="52.24"
                 android:inputType="numberDecimal"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/expenseReasonSpinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amountTxt" />
 
@@ -175,9 +184,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Spend"
-                app:layout_constraintStart_toStartOf="@id/addingExpenseChangeable"
-                app:layout_constraintEnd_toEndOf="@id/addingExpenseChangeable"
-                app:layout_constraintTop_toBottomOf="@id/addingExpenseChangeable"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addingExpenseChangeable"
+                android:layout_marginTop="15dp"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

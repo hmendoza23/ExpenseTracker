@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -23,9 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
-import static android.content.Intent.getIntent;
+import com.example.carprojecthw2.SignupFragment;
 
 
 public class Settings extends Fragment {
@@ -44,6 +47,9 @@ public class Settings extends Fragment {
     private TextView txtNewpassTxt;
     private EditText newEmailEntered;
     private Button emailChangeBtn;
+    private SharedPreferences sharedPreferences;
+
+
 
 
 
@@ -51,6 +57,7 @@ public class Settings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_settings, container, false);
+
 
         changeEmail = root.findViewById(R.id.update_email_button);
         changePassword = root.findViewById(R.id.change_password_button);
@@ -67,12 +74,6 @@ public class Settings extends Fragment {
         confirmnewPass = root.findViewById(R.id.newPassConfirm);
         txtNewpassTxt = root.findViewById(R.id.newPassConfirmTxt);
 
-        final EditText username = root.findViewById(R.id.username);
-        final EditText email = root.findViewById(R.id.email);
-        //retrievedEmailTxt.setText(email.getText().toString());
-
-
-
 
 
 
@@ -84,15 +85,9 @@ public class Settings extends Fragment {
                 animator.setDuration(500);
                 animator.start();
 
-                String user = username.getText().toString();
 
 
-                final HashMap dictionary = new HashMap<>();
-                SharedPreferences emails = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
-                dictionary.putAll(emails.getAll());
-                if(dictionary.containsKey(user)){
-                    System.out.println(user);
-                }
+
             }
         });
 
