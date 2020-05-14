@@ -3,27 +3,35 @@ package com.example.carprojecthw2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -83,6 +91,52 @@ public class MainActivity extends AppCompatActivity {
             isLoggedIn = false;
         }
 
+        SharedPreferences mPrefs2 = getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = mPrefs2.edit();
+        SharedPreferences.Editor editor3 = getSharedPreferences("com.example.ExpenseTracker.budgetHistory", Context.MODE_PRIVATE).edit();
+
+        String today = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date());
+
+        if(mPrefs2.getString("todaysDate", "00000000").equals(today)){
+            homeViewModel.setTodaysRemainingFunds(mPrefs2.getFloat("todaysRemainingFunds", 0f));
+            homeViewModel.setTodaysSpendings(mPrefs2.getFloat("todaysSpending", 0f));
+            homeViewModel.setTodaysOverage(mPrefs2.getFloat("todaysOverage", 0f));
+            homeViewModel.setDesiredSavings(mPrefs2.getFloat("desiredSavings", 0f));
+            homeViewModel.setCurrentSavings(mPrefs2.getFloat("currentSavings", 0));
+        }
+        else{
+            HashMap<String, String> history = new HashMap<>();
+            history.put("date", mPrefs2.getString("todaysDate", "000000"));
+            history.put("remainingFunds", String.valueOf(mPrefs2.getFloat("todaysRemainingFunds", 0f)));
+            history.put("spending", String.valueOf(mPrefs2.getFloat("todaysSpending", 0f)));
+            history.put("overage", String.valueOf(mPrefs2.getFloat("todaysOverage", 0f)));
+
+            Gson gson = new Gson();
+            String hashMapString = gson.toJson(history);
+
+            editor3.putString(today, hashMapString);
+            editor3.commit();
+
+
+            float currentSavings = mPrefs2.getFloat("currentSavings", 0f);
+            currentSavings = currentSavings + mPrefs2.getFloat("todaysRemainingFunds", 0f);
+
+
+            editor2.remove("todaysRemainingFunds");
+            editor2.remove("todaysSpending");
+            editor2.remove("todaysOverage");
+            editor2.putString("todaysDate", today);
+            editor2.remove("currentSavings");
+            editor2.putFloat("currentSavings", currentSavings);
+            editor2.commit();
+
+            homeViewModel.setTodaysRemainingFunds(mPrefs2.getFloat("dailyExpenseMax", 0f));
+            homeViewModel.setTodaysSpendings(0f);
+            homeViewModel.setTodaysOverage(0f);
+            homeViewModel.setCurrentSavings(currentSavings);
+            homeViewModel.setDesiredSavings(mPrefs2.getFloat("desiredSavings", 0f));
+        }
+
 
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -102,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* Navigates to the proper place depending on screen size and login status */
         if(isLoggedIn) {
-            SharedPreferences mPrefs2 = getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
+            SharedPreferences mPrefs3 = getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
             if(mPrefs2.getBoolean("isBudgetSetup", false))
                 navController.navigate(R.id.nav_home);
             else

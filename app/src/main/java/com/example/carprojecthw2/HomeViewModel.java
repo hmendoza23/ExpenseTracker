@@ -46,7 +46,6 @@ public class HomeViewModel extends ViewModel {
     public void increaseTodaysRemainingFunds(float x){todaysRemainingFunds.setValue(todaysRemainingFunds.getValue() + x);}
     public void decreaseTodaysRemainingFunds(float x){todaysRemainingFunds.setValue(todaysRemainingFunds.getValue() - x);}
 
-    //public void addToExpenseList(Expenses expense){ todaysExpenseList.setValue(todaysExpenseList.getValue().add(expense));}
 
     public void setDailyExpenseMax(float x){ dailyExpenseMax.setValue(x); }
     public void setTodaysSpendings(float x){ todaysSpendings.setValue(x); }
@@ -54,4 +53,5 @@ public class HomeViewModel extends ViewModel {
     public void setCurrentSavings(float x){ currentSavings.setValue(x); }
     public void setTodaysOverage(float x) { todaysOverage.setValue(x); }
     public void setTodaysRemainingFunds(float x) { todaysRemainingFunds.setValue(x);}
+    public void setExpenseList(ArrayList<Expenses> expenses){ todaysExpenseList.setValue(expenses);}
 }
