@@ -236,8 +236,8 @@ public class HomeFragment extends Fragment {
         savingsProgress.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
         savingsProgress.setScaleY(4f);
 
-        savingGoal.setText(homeViewModel.getDesiredSavings().getValue().intValue());
-        //currentSavingsTotal.setText(homeViewModel.getCurrentSavings().getValue().intValue());
+        savingGoal.setText(String.valueOf(homeViewModel.getDesiredSavings().getValue().intValue()));
+        currentSavingsTotal.setText(String.valueOf(homeViewModel.getCurrentSavings().getValue().intValue()));
 
 
         return root;
