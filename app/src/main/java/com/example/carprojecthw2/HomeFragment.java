@@ -5,15 +5,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,11 +31,15 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Array;
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,6 +57,10 @@ public class HomeFragment extends Fragment {
     private TextView emptyRecyclerView;
 
     private ProgressBar savingsProgress;
+    private TextView currentSavingTotal;
+    private TextView savingGoal;
+
+
     private LineChart spendingHistory;
 
     private CardView spendingCardView;
@@ -97,6 +103,10 @@ public class HomeFragment extends Fragment {
         emptyRecyclerView = root.findViewById(R.id.emptyRecyclerView);
 
         savingsProgress = root.findViewById(R.id.savingsProgress);
+        currentSavingTotal = root.findViewById(R.id.currentSavingsTotal);
+        savingGoal = root.findViewById(R.id.savingGoal);
+
+
         spendingHistory = root.findViewById(R.id.budgetHistory);
 
         spendingCardView = root.findViewById(R.id.spendCardView);
@@ -104,10 +114,13 @@ public class HomeFragment extends Fragment {
         spendingAmount = root.findViewById(R.id.addingExpenseChangeable);
         spend = root.findViewById(R.id.spendButton);
 
+        boolean setByViewModel = false;
+
         if(homeViewModel.getTodaysExpenseList().getValue() != null){
             if(!homeViewModel.getTodaysExpenseList().getValue().isEmpty()){
                 expensesList = homeViewModel.getTodaysExpenseList().getValue();
                 emptyRecyclerView.setVisibility(View.INVISIBLE);
+                setByViewModel = true;
             }
         }
 
@@ -199,9 +212,31 @@ public class HomeFragment extends Fragment {
         myAdapter = new MyAdapter(getContext(), expensesList, listener);
         dailySpendingRecyclerView.setAdapter(myAdapter);
 
+        if(!setByViewModel) {
+            Gson gson = new Gson();
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
+            if (!sharedPreferences.getString("expensesList", "0").equals("0")) {
+                String storedHashMapString = sharedPreferences.getString("expensesList", "0");
+                java.lang.reflect.Type type = new TypeToken<HashMap<String, Expenses>>() {
+                }.getType();
+                HashMap<String, Expenses> expensesHashMap = gson.fromJson(storedHashMapString, type);
+
+                for (int i = 0; i < expensesHashMap.size(); i++) {
+                    expensesList.add(expensesHashMap.get(String.valueOf(i)));
+                }
+                myAdapter.notifyDataSetChanged();
+                emptyRecyclerView.setVisibility(View.INVISIBLE);
+            }
+        }
 
 
 
+        savingsProgress.setMax(homeViewModel.getDesiredSavings().getValue().intValue());
+        //savingsProgress.setProgress(homeViewModel.getCurrentSavings().getValue().intValue(), true);
+        savingsProgress.setProgress(2500, true);
+        savingsProgress.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+        savingsProgress.setScaleY(4f);
+        currentSavingTotal.setText();
 
 
 
@@ -215,7 +250,17 @@ public class HomeFragment extends Fragment {
         SharedPreferences mPrefs = getActivity().getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = mPrefs.edit();
 
-        editor.putString("todayDate", new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date()));
+        HashMap<String,Expenses> expenses = new HashMap<>();
+        for(int i = 0; i < expensesList.size(); i++){
+            expenses.put(String.valueOf(i), expensesList.get(i));
+        }
+        Gson gson = new Gson();
+        String hashMapString = gson.toJson(expenses);
+
+        editor.remove("expensesList");
+        editor.putString("expensesList", hashMapString);
+
+        editor.putString("todaysDate", new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date()));
         editor.putFloat("todaysRemainingFunds", homeViewModel.getTodaysRemainingFunds().getValue());
         editor.putFloat("todaysSpending", homeViewModel.getTodaysSpending().getValue());
         editor.putFloat("todaysOverage", homeViewModel.getTodaysOverage().getValue());

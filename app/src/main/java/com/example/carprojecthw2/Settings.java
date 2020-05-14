@@ -137,12 +137,13 @@ public class Settings extends Fragment {
                     SharedPreferences.Editor dbEditor = db.edit();
                     dictionary.putAll(db.getAll());
 
-                    if(dictionary.containsKey(retrievedEmailTxt.getText().toString())){
-                        dbEditor.putString(newEmailString);
+                    /*if(dictionary.containsKey(retrievedEmailTxt.getText().toString())){
+                        dbEditor.putString(newEmailString, );
+
                         dbEditor.commit();
                         dbEditor.putString(user, pass);
 
-                    }
+                    }*/
 
 
                     Intent reStart = new Intent(getActivity(), MainActivity.class);
