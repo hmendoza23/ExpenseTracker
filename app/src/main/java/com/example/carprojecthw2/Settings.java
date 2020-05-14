@@ -60,6 +60,11 @@ public class Settings extends Fragment {
             @Override
             public void onClick(View v) {
 
+                SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                final SharedPreferences.Editor editor = mPrefs.edit();
+                editor.putBoolean("loggedIn", false);
+                editor.commit();
+
                 Intent reStart = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(reStart);
                 //Settings.this.finish();
