@@ -26,6 +26,9 @@
         app:layout_constraintTop_toTopOf="@id/dailyBudgetChart"
         app:layout_constraintBottom_toBottomOf="@id/dailyBudgetChart"/>
 
+
+
+
     <TextView
         android:id="@+id/todaysSpendingTxt"
         android:layout_width="wrap_content"
@@ -76,14 +79,14 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/spendCardView"
-        android:layout_width="match_parent"
+        android:layout_width="410dp"
         android:layout_height="190dp"
         app:cardCornerRadius="25dp"
         app:contentPadding="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:cardElevation="40dp">
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add"
+        app:cardElevation="40dp"
+        android:clickable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -99,12 +102,14 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
+                android:id="@+id/amountTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Amount"
                 app:layout_constraintStart_toStartOf="@+id/addingExpenseChangeable"
                 app:layout_constraintEnd_toEndOf="@id/addingExpenseChangeable"
-                app:layout_constraintBottom_toTopOf="@id/addingExpenseChangeable"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="25dp"/>
 
             <EditText
                 android:id="@+id/addingExpenseChangeable"
@@ -115,9 +120,7 @@
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias=".4"/>
+                app:layout_constraintTop_toBottomOf="@id/amountTxt" />
 
             <Button
                 android:id="@+id/spendButton"
@@ -133,5 +136,6 @@
 
 
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

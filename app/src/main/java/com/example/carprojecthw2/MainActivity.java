@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             signUp.setVisible(true);
             settings.setVisible(false);
             graph.setVisible(false);
-            //logOut.setVisible(false);
+            Budget.setVisible(false);
             isLoggedIn = false;
         }
 

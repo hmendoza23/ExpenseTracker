@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/expenseReasonTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/amountTxt_Rv"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/amountTxt_Rv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/expenseReasonTxt"
+        app:layout_constraintEnd_toStartOf="@+id/removeExpense"
+        app:layout_constraintTop_toTopOf="@id/expenseReasonTxt"
+        app:layout_constraintBottom_toBottomOf="@id/expenseReasonTxt"/>
+
+    <ImageButton
+        android:id="@+id/removeExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/remove"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toEndOf="@id/amountTxt_Rv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/amountTxt_Rv"
+        app:layout_constraintBottom_toBottomOf="@id/amountTxt_Rv"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
