@@ -138,9 +138,9 @@ public class Settings extends Fragment {
                     dictionary.putAll(db.getAll());
 
                     if(dictionary.containsKey(retrievedEmailTxt.getText().toString())){
-                        dbEditor.putString(newEmailString);
+                        //dbEditor.putString(newEmailString);
                         dbEditor.commit();
-                        dbEditor.putString(user, pass);
+                       // dbEditor.putString(user, pass);
 
                     }
 
