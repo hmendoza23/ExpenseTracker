@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+
 public class HomeViewModel extends ViewModel {
     private MutableLiveData<Float> dailyExpenseMax = new MutableLiveData<>();
     private MutableLiveData<Float> todaysRemainingFunds = new MutableLiveData<>();
@@ -11,7 +13,17 @@ public class HomeViewModel extends ViewModel {
     private MutableLiveData<Float> desiredSavings = new MutableLiveData<>();
     private MutableLiveData<Float> currentSavings = new MutableLiveData<>();
     private MutableLiveData<Float> todaysOverage = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Expenses>> todaysExpenseList = new MutableLiveData<>();
     // currently unsure how i want to use this
+
+    public HomeViewModel(){
+        dailyExpenseMax.setValue(0f);
+        todaysRemainingFunds.setValue(0f);
+        todaysSpendings.setValue(0f);
+        desiredSavings.setValue(0f);
+        currentSavings.setValue(0f);
+        todaysOverage.setValue(0f);
+    }
 
 
     public LiveData<Float> getExpenseMax(){ return dailyExpenseMax; }
@@ -20,6 +32,7 @@ public class HomeViewModel extends ViewModel {
     public LiveData<Float> getDesiredSavings() { return desiredSavings; }
     public LiveData<Float> getCurrentSavings() { return currentSavings; }
     public LiveData<Float> getTodaysRemainingFunds(){ return  todaysRemainingFunds; }
+    public LiveData<ArrayList<Expenses>> getTodaysExpenseList(){ return todaysExpenseList; }
 
     public void increaseTodaysSpending(float x){ todaysSpendings.setValue(todaysSpendings.getValue() + x);}
     public void decreaseTodaysSpending(float x){ todaysSpendings.setValue(todaysSpendings.getValue() - x);}
@@ -32,6 +45,8 @@ public class HomeViewModel extends ViewModel {
 
     public void increaseTodaysRemainingFunds(float x){todaysRemainingFunds.setValue(todaysRemainingFunds.getValue() + x);}
     public void decreaseTodaysRemainingFunds(float x){todaysRemainingFunds.setValue(todaysRemainingFunds.getValue() - x);}
+
+    //public void addToExpenseList(Expenses expense){ todaysExpenseList.setValue(todaysExpenseList.getValue().add(expense));}
 
     public void setDailyExpenseMax(float x){ dailyExpenseMax.setValue(x); }
     public void setTodaysSpendings(float x){ todaysSpendings.setValue(x); }

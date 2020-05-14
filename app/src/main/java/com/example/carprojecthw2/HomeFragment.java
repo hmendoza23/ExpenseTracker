@@ -2,7 +2,9 @@ package com.example.carprojecthw2;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -56,6 +58,9 @@ public class HomeFragment extends Fragment {
     private EditText spendingAmount;
     private Button spend;
 
+    private float todaysRemainingFunds;
+    private float todaysSpending;
+    private float todaysOverage;
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,9 +70,9 @@ public class HomeFragment extends Fragment {
 
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
-        float todaysRemainingFunds = homeViewModel.getTodaysRemainingFunds().getValue();
-        float todaysSpending = homeViewModel.getTodaysSpending().getValue();
-        float todaysOverage = homeViewModel.getTodaysOverage().getValue();
+        todaysRemainingFunds = homeViewModel.getTodaysRemainingFunds().getValue();
+        todaysSpending = homeViewModel.getTodaysSpending().getValue();
+        todaysOverage = homeViewModel.getTodaysOverage().getValue();
 
         List<PieEntry> pieEntries = new ArrayList<>();
         pieEntries.add(new PieEntry(todaysRemainingFunds, "Left for Today"));
@@ -80,7 +85,7 @@ public class HomeFragment extends Fragment {
         colors.add(Color.LTGRAY);
         colors.add(Color.RED);
         dataSet.setColors(colors);
-        PieData data = new PieData(dataSet);
+        final PieData data = new PieData(dataSet);
 
         dailyBudgetChart = root.findViewById(R.id.dailyBudgetChart);
         dailyBudgetChart.setDrawHoleEnabled(true);
@@ -148,6 +153,11 @@ public class HomeFragment extends Fragment {
                 if(spendingAmount.getText().toString().matches("(\\d*\\.?\\d{0,2})")){
                     homeViewModel.increaseTodaysSpending(Float.parseFloat(spendingAmount.getText().toString()));
                     homeViewModel.decreaseTodaysRemainingFunds(Float.parseFloat(spendingAmount.getText().toString()));
+
+                    expensesList.add(new Expenses("vibrator", Float.parseFloat(spendingAmount.getText().toString())));
+                    myAdapter.notifyDataSetChanged();
+                    emptyRecyclerView.setVisibility(View.INVISIBLE);
+
                 }else{
                     Toast.makeText(getActivity(),"Incorrect Format: Example: XX.XX", Toast.LENGTH_LONG).show();
                 }
@@ -159,7 +169,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view, final int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(R.string.app_name);
-                builder.setMessage("Are you sure you want to remove the class?");
+                builder.setMessage("Are you sure you want to remove this expense?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -197,6 +207,20 @@ public class HomeFragment extends Fragment {
 
 
         return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        SharedPreferences mPrefs = getActivity().getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mPrefs.edit();
+
+        editor.putFloat("todaysRemainingFunds", todaysRemainingFunds);
+        editor.putFloat("todaysSpending", todaysSpending);
+        editor.putFloat("todaysOverage", todaysOverage);
+        editor.commit();
+
     }
 
     public interface RecyclerViewClickListener{

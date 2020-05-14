@@ -122,6 +122,8 @@ public class Budget extends Fragment {
                 prefEditor.commit();
 
                 homeViewModel.setDailyExpenseMax(dailyExpenseMax);
+                homeViewModel.setTodaysRemainingFunds(dailyExpenseMax);
+                homeViewModel.setTodaysOverage(0);
                 homeViewModel.setTodaysSpendings(todaysSpendings);
                 homeViewModel.setDesiredSavings(desiredSavings);
                 homeViewModel.setCurrentSavings(currentSavings);
