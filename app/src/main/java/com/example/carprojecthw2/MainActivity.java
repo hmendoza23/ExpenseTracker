@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem login = menu.findItem(R.id.nav_login);
         MenuItem signUp = menu.findItem(R.id.nav_signup);
         MenuItem settings = menu.findItem(R.id.nav_settings);
-        MenuItem logOut = menu.findItem(R.id.logout);
+        //MenuItem logOut = menu.findItem(R.id.logout);
         MenuItem Budget = menu.findItem(R.id.budget_frag);
         MenuItem graph = menu.findItem(R.id.nav_graphs);
 
