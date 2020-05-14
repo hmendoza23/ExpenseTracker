@@ -118,7 +118,6 @@ public class HomeFragment extends Fragment {
                 animator.translationX(spendingCardView.getWidth());
                 animator.setDuration(500);
                 animator.start();
-
             }
         });
 
