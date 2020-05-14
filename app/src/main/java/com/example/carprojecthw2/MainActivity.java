@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             Gson gson = new Gson();
             String hashMapString = gson.toJson(history);
 
-            editor3.putString(today, hashMapString);
+            editor3.putString(mPrefs2.getString("todaysDate", "000000"), hashMapString);
             editor3.commit();
 
 
