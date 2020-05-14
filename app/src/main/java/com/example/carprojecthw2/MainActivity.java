@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
             homeViewModel.setTodaysSpendings(mPrefs2.getFloat("todaysSpending", 0f));
             homeViewModel.setTodaysOverage(mPrefs2.getFloat("todaysOverage", 0f));
             homeViewModel.setDesiredSavings(mPrefs2.getFloat("desiredSavings", 0f));
+            homeViewModel.setCurrentSavings(mPrefs2.getFloat("currentSavings", 0));
         }
         else{
             HashMap<String, String> history = new HashMap<>();
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             homeViewModel.setTodaysRemainingFunds(mPrefs2.getFloat("dailyExpenseMax", 0f));
             homeViewModel.setTodaysSpendings(0f);
             homeViewModel.setTodaysOverage(0f);
-           // homeViewModel
+            homeViewModel.setCurrentSavings(currentSavings);
             homeViewModel.setDesiredSavings(mPrefs2.getFloat("desiredSavings", 0f));
         }
 

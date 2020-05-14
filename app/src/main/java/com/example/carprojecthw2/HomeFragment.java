@@ -34,7 +34,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class HomeFragment extends Fragment {
     private TextView emptyRecyclerView;
 
     private ProgressBar savingsProgress;
-    private TextView currentSavingTotal;
+    private TextView currentSavingsTotal;
     private TextView savingGoal;
 
 
@@ -103,7 +102,7 @@ public class HomeFragment extends Fragment {
         emptyRecyclerView = root.findViewById(R.id.emptyRecyclerView);
 
         savingsProgress = root.findViewById(R.id.savingsProgress);
-        currentSavingTotal = root.findViewById(R.id.currentSavingsTotal);
+        currentSavingsTotal = root.findViewById(R.id.currentSavingsTotal);
         savingGoal = root.findViewById(R.id.savingGoal);
 
 
@@ -236,8 +235,9 @@ public class HomeFragment extends Fragment {
         savingsProgress.setProgress(2500, true);
         savingsProgress.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
         savingsProgress.setScaleY(4f);
-        currentSavingTotal.setText();
 
+        savingGoal.setText(homeViewModel.getDesiredSavings().getValue().intValue());
+        //currentSavingsTotal.setText(homeViewModel.getCurrentSavings().getValue().intValue());
 
 
         return root;
