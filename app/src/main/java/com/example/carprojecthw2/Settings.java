@@ -1,9 +1,11 @@
 package com.example.carprojecthw2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class Settings extends Fragment {
@@ -31,10 +34,11 @@ public class Settings extends Fragment {
         logoutButton = root.findViewById(R.id.logout);
 
         changeEmail.setOnClickListener(new View.OnClickListener() {
-            SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-            final SharedPreferences.Editor editor = mPrefs.edit();
+            SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
+            SharedPreferences.Editor dbEditor = db.edit();
             @Override
             public void onClick(View v) {
+                final CardView cardView = findViewById(R.id.card_view);
 
             }
         });
@@ -49,6 +53,22 @@ public class Settings extends Fragment {
         resetData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText temp;
+                final int[] txtId = new int[] {
+                        R.id.annualSalary,
+                        R.id.expenseTxt,
+                        R.id.dailyExpense,
+                        R.id.savingTxt,
+                        R.id.desiredSavings,
+                        R.id.calcSalaryChangeable,
+                        R.id.calcExpenseChangeable,
+                        R.id.calcWantedSavingChangeable,
+                        R.id.calcExpectedSavingChangeable
+                };
+                for (int i = 0; i < txtId.length; i++){
+                    temp = (EditText) getView().findViewById(txtId[i]);
+                    temp.setText(null);
+                }
 
             }
         });
@@ -65,7 +85,7 @@ public class Settings extends Fragment {
                 editor.apply();
                 Intent reStart = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 startActivity(reStart);
-
+                getActivity().finish();
             }
 
         });
