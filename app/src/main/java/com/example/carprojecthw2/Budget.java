@@ -108,6 +108,7 @@ public class Budget extends Fragment {
             public void onClick(View v) {
                 float dailyExpenseMax = Float.parseFloat(calcExpenseChangeable.getText().toString());
                 float desiredSavings = Float.parseFloat(calcExpectedSavingChangeable.getText().toString());
+                float annualSalary = Float.parseFloat(calcSalaryChangeable.getText().toString());
 
                 SharedPreferences mPrefs = getActivity().getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
 
@@ -116,6 +117,7 @@ public class Budget extends Fragment {
 
                 SharedPreferences.Editor prefEditor = mPrefs.edit();
 
+                prefEditor.putFloat("annualSalary", annualSalary);
                 prefEditor.putFloat("dailyExpenseMax", dailyExpenseMax);
                 prefEditor.putFloat("desiredSavings", desiredSavings);
                 prefEditor.putBoolean("isBudgetSetup", true);

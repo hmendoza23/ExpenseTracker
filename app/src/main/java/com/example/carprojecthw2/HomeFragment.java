@@ -143,6 +143,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        homeViewModel.getTodaysExpenseList().observe(getViewLifecycleOwner(), new Observer<ArrayList<Expenses>>() {
+            @Override
+            public void onChanged(ArrayList<Expenses> expenses) {
+                if(expenses.isEmpty()){
+                    emptyRecyclerView.setVisibility(View.VISIBLE);
+                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE).edit();
+                    editor.remove("expensesList");
+                    editor.commit();
+                }
+            }
+        });
+
         if(homeViewModel.getTodaysExpenseList().getValue() != null){
             if(!homeViewModel.getTodaysExpenseList().getValue().isEmpty()){
                 expensesList = homeViewModel.getTodaysExpenseList().getValue();
@@ -202,6 +214,13 @@ public class HomeFragment extends Fragment {
                         emptyRecyclerView.setVisibility(View.INVISIBLE);
 
                         homeViewModel.setExpenseList(expensesList);
+
+                        if(homeViewModel.getTodaysRemainingFunds().getValue() < 0){
+                            homeViewModel.increaseTodaysOverage(Math.abs(homeViewModel.getTodaysRemainingFunds().getValue()));
+                            homeViewModel.setTodaysRemainingFunds(0);
+                            homeViewModel.setTodaysSpendings(homeViewModel.getExpenseMax().getValue() - homeViewModel.getTodaysOverage().getValue());
+                        }
+
 
                         final List<PieEntry> pieEntries2 = new ArrayList<>();
                         pieEntries2.add(new PieEntry(homeViewModel.getTodaysRemainingFunds().getValue(), "Left"));
@@ -291,6 +310,7 @@ public class HomeFragment extends Fragment {
 
 
 
+
         return root;
     }
 
@@ -324,8 +344,25 @@ public class HomeFragment extends Fragment {
     }
 
     public void remove(int position){
-        homeViewModel.increaseTodaysRemainingFunds(expensesList.get(position).getAmount());
-        homeViewModel.decreaseTodaysSpending(expensesList.get(position).getAmount());
+
+        if(homeViewModel.getTodaysOverage().getValue() > 0){
+            float temp = homeViewModel.getTodaysOverage().getValue();
+            temp -= expensesList.get(position).getAmount();
+
+            if(temp < 0){
+                homeViewModel.setTodaysOverage(0);
+                homeViewModel.increaseTodaysRemainingFunds(Math.abs(temp));
+                homeViewModel.setTodaysSpendings(homeViewModel.getExpenseMax().getValue() - homeViewModel.getTodaysRemainingFunds().getValue());
+            }
+            else{
+                homeViewModel.setTodaysOverage(temp);
+                homeViewModel.setTodaysSpendings(homeViewModel.getExpenseMax().getValue() - homeViewModel.getTodaysOverage().getValue());
+            }
+        }else {
+            homeViewModel.increaseTodaysRemainingFunds(expensesList.get(position).getAmount());
+            homeViewModel.decreaseTodaysSpending(expensesList.get(position).getAmount());
+
+        }
         expensesList.remove(position);
         myAdapter.notifyDataSetChanged();
         homeViewModel.setExpenseList(expensesList);
@@ -337,7 +374,7 @@ public class HomeFragment extends Fragment {
 
         dailyBudgetChart.clearAnimation();
 
-        dataSet = new PieDataSet(pieEntries2,".");
+        dataSet = new PieDataSet(pieEntries2, ".");
         dataSet.setColors(colors);
         data = new PieData(dataSet);
         dailyBudgetChart.setData(data);
