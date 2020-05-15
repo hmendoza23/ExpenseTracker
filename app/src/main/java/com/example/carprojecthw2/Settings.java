@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -29,7 +28,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-
+/**
+ * this class handles the functionalities in the settings page
+ */
 
 public class Settings extends Fragment {
     private Button changeEmail;
@@ -37,6 +38,7 @@ public class Settings extends Fragment {
     private Button resetData;
     private Button logoutButton;
     private Button chgnPass;
+    //private Button closeEmailChangeWindow;
     private EditText newPassTxt;
     private EditText confirmnewPass;
     private EditText passEmail;
@@ -50,31 +52,13 @@ public class Settings extends Fragment {
     private Button emailChangeBtn;
 
 
-
-
     /**
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-
-
-        final HashMap dictionary = new HashMap<>();
-
-        SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
-        dictionary.putAll(db.getAll());
-
-
-        Iterator iter = db.getAll().entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry pair = (Map.Entry) iter.next();
-            System.out.println("Keys n vals: " + pair);
-        }
-
-    }
+     * onCreateView sets up the graphical initialisations
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
      */
-
-
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,9 +80,11 @@ public class Settings extends Fragment {
         confirmnewPass = root.findViewById(R.id.newPassConfirm);
         txtNewpassTxt = root.findViewById(R.id.newPassConfirmTxt);
         passEmail = root.findViewById(R.id.passwordEmail);
+        //closeEmailChangeWindow = root.findViewById(R.id.exitButtonForChangeEmail);
 
-
-
+        /**
+         * this method is for the change email button. once clicked with awaken the cardview for this button
+         */
         changeEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,16 +93,18 @@ public class Settings extends Fragment {
                 animator.setDuration(500);
                 animator.start();
             }
+
         });
 
+
+        /**
+         * this cardview is opened after change email button is pressed, it is animated by sliding sideways
+         */
         final float x[] = new float[2];
         changeEmailCardView.setOnTouchListener(new View.OnTouchListener() {
 
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         x[0] = event.getX();
@@ -130,21 +118,14 @@ public class Settings extends Fragment {
                             animate.setDuration(500);
                             animate.start();
                         }
-
                         break;
-
                     default:
                 }
-
-
-
                 return true;
             }
 
-
-
-
         });
+
 
 
         /* set functionality of the update email button inside the card view **/
@@ -153,10 +134,8 @@ public class Settings extends Fragment {
             @Override
             public void onClick(View v){
 
-
                 SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
                 SharedPreferences.Editor dbEditor = db.edit();
-
 
                 boolean goodToSubmit = true;
                 int errorCount = 0;
@@ -186,7 +165,6 @@ public class Settings extends Fragment {
                     SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
                     final SharedPreferences.Editor editor = mPrefs.edit();
 
-
                     dbEditor.putString(newEmailString, passemailchange);
                     dbEditor.commit();
 
@@ -210,6 +188,10 @@ public class Settings extends Fragment {
             }
         });
 
+
+        /**
+         * this method is for the change password button. once clicked will awaken the cardview for this button
+         */
         changePassword.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -222,6 +204,9 @@ public class Settings extends Fragment {
         });
 
 
+        /**
+         * this card view is awaken when the button is clicked, slides in
+         */
         final float x1[] = new float[2];
         changePasswordCardView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -249,6 +234,9 @@ public class Settings extends Fragment {
 
         });
 
+        /**
+         * this button is once the user clicks to change password inside the cardview
+         */
         chgnPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -333,10 +321,12 @@ public class Settings extends Fragment {
         });
 
 
+        /**
+         * this is to log the user out of the app, just passes a boolean from the shared preferences and finishes the activity
+         */
         logoutButton.setOnClickListener(new View.OnClickListener() {
             SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             final SharedPreferences.Editor editor = mPrefs.edit();
-
 
             @Override
             public void onClick(View v) {
@@ -349,7 +339,6 @@ public class Settings extends Fragment {
             }
 
         });
-
 
     // Inflate the layout for this fragment
         return root;

@@ -13,12 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import java.util.regex.Pattern;
 
+/**
+ * this class handles the functionality of the signup page
+ */
 public class SignupFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -84,11 +85,13 @@ public class SignupFragment extends Fragment {
                     /* closes the keyboard **/
                     password.onEditorAction(EditorInfo.IME_ACTION_DONE);
 
+                    /* with shared preferences new data is then added**/
                     SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
                     SharedPreferences.Editor dbEditor = db.edit();
                     dbEditor.putString(user, pass);
                     dbEditor.commit();
 
+                    /* takes us to the login page**/
                     Intent reStart = new Intent(getActivity(), MainActivity.class);
                     startActivity(reStart);
                     getActivity().finish();
