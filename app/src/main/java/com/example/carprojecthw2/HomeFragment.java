@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment {
 
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
-
+        /* All below used for the circle pie chart */
         final List<PieEntry> pieEntries = new ArrayList<>();
         pieEntries.add(new PieEntry(homeViewModel.getTodaysRemainingFunds().getValue(), "Left"));
         pieEntries.add(new PieEntry(homeViewModel.getTodaysSpending().getValue(), "Spent"));
@@ -112,9 +112,9 @@ public class HomeFragment extends Fragment {
         dailyBudgetChart.setDrawEntryLabels(false);
         dailyBudgetChart.getDescription().setEnabled(false);
         dailyBudgetChart.animateY(1000);
-
-
         dailyBudgetChart.setData(data);
+
+        /* Useded for adding expenses to the recycler view */
         addExpenseButton = root.findViewById(R.id.add);
         expenseReasonSpinner = root.findViewById(R.id.expenseReasonSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.reason, android.R.layout.simple_spinner_dropdown_item);
@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment {
         currentSavingsTotal = root.findViewById(R.id.currentSavingsTotal);
         savingGoal = root.findViewById(R.id.savingGoal);
 
-
+        /* Used for line chart data of history */
         spendingHistory = root.findViewById(R.id.budgetHistory);
         ArrayList<Entry> values = new ArrayList<>();
         HashMap<String, Float> moneyData = new HashMap<>();
@@ -180,7 +180,7 @@ public class HomeFragment extends Fragment {
         spend = root.findViewById(R.id.spendButton);
 
         boolean setByViewModel = false;
-
+        /* updating expense list */
         homeViewModel.getExpenseMax().observe(getViewLifecycleOwner(), new Observer<Float>() {
             @Override
             public void onChanged(Float aFloat) {
@@ -194,6 +194,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        /* updating expense list and textview */
         homeViewModel.getTodaysExpenseList().observe(getViewLifecycleOwner(), new Observer<ArrayList<Expenses>>() {
             @Override
             public void onChanged(ArrayList<Expenses> expenses) {
@@ -206,6 +207,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        /* setting visibility and list of expenses list */
         if(homeViewModel.getTodaysExpenseList().getValue() != null){
             if(!homeViewModel.getTodaysExpenseList().getValue().isEmpty()){
                 expensesList = homeViewModel.getTodaysExpenseList().getValue();
@@ -214,6 +216,7 @@ public class HomeFragment extends Fragment {
             }
         }
 
+        /* animation of card view */
         addExpenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,7 +227,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
+        /* touch to swipe functionality */
         final float x[] = new float[2];
         spendingCardView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -252,6 +255,7 @@ public class HomeFragment extends Fragment {
         });
 
 
+        /* updates all the needed values and info into homeView and updates chart */
         spend.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -298,6 +302,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        /* alert dialog to confirm removal of selected item */
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, final int position) {
@@ -322,14 +327,14 @@ public class HomeFragment extends Fragment {
             }
         };
 
-
+        /* set up for recycler view */
         dailySpendingRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         dailySpendingRecyclerView.setLayoutManager(layoutManager);
         myAdapter = new MyAdapter(getContext(), expensesList, listener);
         dailySpendingRecyclerView.setAdapter(myAdapter);
 
-
+        /* pulls expenses list from the shared preferences if not already set */
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
         if(!setByViewModel) {
             Gson gson = new Gson();
@@ -365,6 +370,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    /* used to save all the data needed between application launches */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -390,10 +396,12 @@ public class HomeFragment extends Fragment {
 
     }
 
+    /* callback for clicking on recycler view items */
     public interface RecyclerViewClickListener{
         void onClick(View view, int position);
     }
 
+    /* removal of item in recycler view by position */
     public void remove(int position){
 
         if(homeViewModel.getTodaysOverage().getValue() > 0){

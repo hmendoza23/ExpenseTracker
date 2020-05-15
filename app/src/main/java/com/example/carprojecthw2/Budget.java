@@ -69,6 +69,7 @@ public class Budget extends Fragment {
 
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
+        /* calculate the possible budget and savings based on the users input */
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +105,7 @@ public class Budget extends Fragment {
         });
 
 
+        /* Saves calculated data to home view model and shared preferences */
         saveBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +146,7 @@ public class Budget extends Fragment {
         return root;
     }
 
+    /* validates user input */
     public boolean valid(){
         boolean isValid = true;
 

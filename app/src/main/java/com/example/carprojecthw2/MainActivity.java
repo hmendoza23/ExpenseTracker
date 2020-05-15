@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem settings = menu.findItem(R.id.nav_settings);
         //MenuItem logOut = menu.findItem(R.id.logout);
         MenuItem Budget = menu.findItem(R.id.budget_frag);
-        MenuItem graph = menu.findItem(R.id.nav_graphs);
+
 
 
         /* All stuff to check if the user is already logged in and what/what not to show the user depending on that */
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             login.setVisible(false);
             signUp.setVisible(false);
             settings.setVisible(true);
-            graph.setVisible(true);
+
             String user = mPrefs.getString("User", null);
             userTxt.setText(user);
             isLoggedIn = true;
@@ -88,11 +88,10 @@ public class MainActivity extends AppCompatActivity {
             login.setVisible(true);
             signUp.setVisible(true);
             settings.setVisible(false);
-            graph.setVisible(false);
+
             Budget.setVisible(false);
             isLoggedIn = false;
         }
-
 
 
         SharedPreferences mPrefs2 = getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
@@ -159,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_login,R.id.nav_signup, R.id.nav_settings,R.id.nav_graphs, R.id.budget_frag, R.id.logout)
+                R.id.nav_home, R.id.nav_login,R.id.nav_signup, R.id.nav_settings, R.id.budget_frag, R.id.logout)
                 .setDrawerLayout(drawer)
                 .build();
 
