@@ -48,7 +48,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        android:textStyle="bold"
         android:textColor="@color/colorRed"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -71,9 +70,9 @@
 
             <TextView
                 android:id="@+id/emailTxt"
-                android:layout_width="60dp"
+                android:layout_width="300dp"
                 android:layout_height="26dp"
-                android:text="Enter New Email:"
+                android:text="Enter new email:"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -99,9 +98,9 @@
 
             <TextView
                 android:id="@+id/newEmailTxt"
-                android:layout_width="148dp"
+                android:layout_width="300dp"
                 android:layout_height="32dp"
-                android:text="Enter your password:"
+                android:text="Enter password to confirm change:"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -113,7 +112,7 @@
                 app:layout_constraintVertical_bias="0.497" />
 
             <EditText
-                android:id="@+id/newEmail"
+                android:id="@+id/enteredPasswordforEmailChange"
                 android:layout_width="271dp"
                 android:layout_height="45dp"
                 android:ems="10"

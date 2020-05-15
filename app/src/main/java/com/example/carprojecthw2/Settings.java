@@ -46,7 +46,7 @@ public class Settings extends Fragment {
     private TextView txtEmail;
     private EditText retrievedEmailTxt;
     private TextView txtNewpassTxt;
-    private EditText newEmailEntered;
+    private EditText passForEmailChange;
     private Button emailChangeBtn;
 
 
@@ -86,7 +86,7 @@ public class Settings extends Fragment {
         resetData = root.findViewById(R.id.reset_data);
         logoutButton = root.findViewById(R.id.logout);
         changeEmailCardView = root.findViewById(R.id.emailCardView);
-        newEmailEntered = root.findViewById(R.id.newEmail);
+        passForEmailChange = root.findViewById(R.id.enteredPasswordforEmailChange);
         emailChangeBtn = root.findViewById(R.id.confirm_update_email_button);
         txtEmail = root.findViewById(R.id.emailTxt);
         retrievedEmailTxt = root.findViewById(R.id.retrievedEmail);
@@ -161,8 +161,8 @@ public class Settings extends Fragment {
                 boolean goodToSubmit = true;
                 int errorCount = 0;
                 String error = new String();
-                String currentEmailString = retrievedEmailTxt.getText().toString();
-                String newEmailString = newEmailEntered.getText().toString();
+                String newEmailString = retrievedEmailTxt.getText().toString();
+                String passemailchange = passForEmailChange.getText().toString();
 
                 if(!Pattern.matches("[\\w | \\. ]+\\@[\\w | \\. ]+", newEmailString)) {
                     txtEmail.setTextColor(Color.RED);
@@ -183,24 +183,28 @@ public class Settings extends Fragment {
                 }
 
                 if(goodToSubmit){
+                    SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+                    final SharedPreferences.Editor editor = mPrefs.edit();
 
-                    /* closes the keyboard **/
-                    newEmailEntered.onEditorAction(EditorInfo.IME_ACTION_DONE);
 
-                    dbEditor.putString(currentEmailString, newEmailString);
+                    dbEditor.putString(newEmailString, passemailchange);
                     dbEditor.commit();
 
-                    /* look in run to see the db printed out */
+                    editor.remove("loggedIn");
+                    editor.putBoolean("loggedIn", false);
+                    editor.apply();
+                    Toast.makeText(getContext(), "LOGIN WITH NEW EMAIL!", Toast.LENGTH_LONG).show();
+                    Intent reStart = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                    startActivity(reStart);
+                    getActivity().finish();
+
+                    /* look in terminal to see the db printed out */
                     Iterator iter = db.getAll().entrySet().iterator();
                     while (iter.hasNext()) {
                         Map.Entry pair = (Map.Entry) iter.next();
-                        //System.out.println("SHould print emails only:" + pair.getKey());
+                        //System.out.println("Should print emails only:" + pair.getKey());
                         System.out.println("Stuff in db: " + pair);
                     }
-
-                    Intent reStart = new Intent(getActivity(), MainActivity.class);
-                    startActivity(reStart);
-                    getActivity().finish();
 
                 }
             }
@@ -283,11 +287,10 @@ public class Settings extends Fragment {
                     dbEditor.putString(currEmail, rePass);
                     dbEditor.commit();
 
-
                     editor.remove("loggedIn");
                     editor.putBoolean("loggedIn", false);
                     editor.apply();
-                    Toast.makeText(getContext(), "Login with new password!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "LOGIN WITH NEW PASSWORD!", Toast.LENGTH_LONG).show();
                     Intent reStart = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                     startActivity(reStart);
                     getActivity().finish();
