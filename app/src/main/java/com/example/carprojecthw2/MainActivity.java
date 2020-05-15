@@ -35,11 +35,19 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * this class handles the functionality of the sliding menu drawer
+ */
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private HomeViewModel homeViewModel;
 
+    /**
+     * this onCreate method instintaniates non grphical initialisations
+     * shows what can be shown to the user depending if they are logged in or not
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

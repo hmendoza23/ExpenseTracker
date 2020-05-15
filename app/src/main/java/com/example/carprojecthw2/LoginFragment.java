@@ -19,7 +19,20 @@ import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
 
+
+/**
+ * This login fragment class handles the functionality of a user login
+ * it takes in an email and password and checks if their credentials exist in shared preferences
+ */
 public class LoginFragment extends Fragment {
+
+    /**
+     * this oncreateview is called and we can assign any view variables and do any graphical initialisations
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return expected to return a view from this method
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState){
@@ -40,6 +53,11 @@ public class LoginFragment extends Fragment {
 
         Button login = root.findViewById(R.id.loginBtn);
         login.setOnClickListener(new View.OnClickListener() {
+            /**
+             * this onClick method is for when the login button is CLICKED.
+             * Goes through user validation and checks if data exists
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 String user = username.getText().toString();
