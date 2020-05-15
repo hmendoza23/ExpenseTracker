@@ -73,7 +73,7 @@
                 android:id="@+id/emailTxt"
                 android:layout_width="60dp"
                 android:layout_height="26dp"
-                android:text="Email:"
+                android:text="Enter New Email:"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -84,11 +84,11 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.134" />
 
-            <TextView
+            <EditText
                 android:id="@+id/retrievedEmail"
                 android:layout_width="271dp"
                 android:layout_height="45dp"
-                android:hint="email should be retireved"
+                android:inputType="text"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +101,7 @@
                 android:id="@+id/newEmailTxt"
                 android:layout_width="148dp"
                 android:layout_height="32dp"
-                android:text="Enter new email:"
+                android:text="Enter your password:"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -117,8 +117,7 @@
                 android:layout_width="271dp"
                 android:layout_height="45dp"
                 android:ems="10"
-                android:hint="email@csulb.edu"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.347"
@@ -162,6 +161,34 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/passwordEmailTxt"
+                android:layout_width="160dp"
+                android:layout_height="26dp"
+                android:text="Enter Your Email:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.123"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.125" />
+
+            <EditText
+                android:id="@+id/passwordEmail"
+                android:layout_width="330dp"
+                android:layout_height="45dp"
+                android:inputType="text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.123"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.190" />
+
 
 
             <TextView
@@ -177,20 +204,20 @@
                 app:layout_constraintHorizontal_bias="0.123"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.134" />
+                app:layout_constraintVertical_bias="0.360" />
 
             <EditText
                 android:id="@+id/newPass"
-                android:layout_width="271dp"
+                android:layout_width="330dp"
                 android:layout_height="45dp"
                 android:ems="10"
                 android:inputType="textPassword"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.124"
+                app:layout_constraintHorizontal_bias="0.123"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.190" />
+                app:layout_constraintVertical_bias="0.420" />
 
             <TextView
                 android:id="@+id/newPassConfirmTxt"
@@ -202,23 +229,23 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.124"
+                app:layout_constraintHorizontal_bias="0.123"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.400" />
+                app:layout_constraintVertical_bias="0.600" />
 
             <EditText
                 android:id="@+id/newPassConfirm"
-                android:layout_width="271dp"
+                android:layout_width="330dp"
                 android:layout_height="45dp"
                 android:ems="10"
                 android:inputType="textPassword"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.124"
+                app:layout_constraintHorizontal_bias="0.123"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.470" />
+                app:layout_constraintVertical_bias="0.6900" />
 
             <Button
                 android:id="@+id/confirm_change_pass_button"
@@ -230,7 +257,7 @@
                 app:layout_constraintHorizontal_bias="0.450"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.680" />
+                app:layout_constraintVertical_bias="0.900" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

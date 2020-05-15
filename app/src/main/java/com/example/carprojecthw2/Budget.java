@@ -19,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 
+
 public class Budget extends Fragment {
 
     private TextView salaryTxt;
@@ -132,8 +133,12 @@ public class Budget extends Fragment {
 
                 NavController navController = Navigation.findNavController(getActivity().findViewById(R.id.nav_host_fragment));
                 navController.navigate(R.id.nav_home);
+
+
             }
         });
+
+
 
 
         return root;

@@ -30,7 +30,9 @@ import com.google.gson.GsonBuilder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
             Budget.setVisible(false);
             isLoggedIn = false;
         }
+
+
 
         SharedPreferences mPrefs2 = getSharedPreferences("com.example.ExpenseTracker.budgetData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor2 = mPrefs2.edit();

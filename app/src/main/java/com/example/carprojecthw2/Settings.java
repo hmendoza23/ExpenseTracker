@@ -24,11 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.example.carprojecthw2.SignupFragment;
 
 
 public class Settings extends Fragment {
@@ -39,18 +39,40 @@ public class Settings extends Fragment {
     private Button chgnPass;
     private EditText newPassTxt;
     private EditText confirmnewPass;
+    private EditText passEmail;
 
     private CardView changeEmailCardView;
     private CardView changePasswordCardView;
     private TextView txtEmail;
-    private TextView retrievedEmailTxt;
+    private EditText retrievedEmailTxt;
     private TextView txtNewpassTxt;
     private EditText newEmailEntered;
     private Button emailChangeBtn;
-    private SharedPreferences sharedPreferences;
 
 
 
+
+    /**
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+
+
+        final HashMap dictionary = new HashMap<>();
+
+        SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
+        dictionary.putAll(db.getAll());
+
+
+        Iterator iter = db.getAll().entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry pair = (Map.Entry) iter.next();
+            System.out.println("Keys n vals: " + pair);
+        }
+
+    }
+     */
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -73,7 +95,7 @@ public class Settings extends Fragment {
         changePasswordCardView = root.findViewById(R.id.passwordCardView);
         confirmnewPass = root.findViewById(R.id.newPassConfirm);
         txtNewpassTxt = root.findViewById(R.id.newPassConfirmTxt);
-
+        passEmail = root.findViewById(R.id.passwordEmail);
 
 
 
@@ -84,10 +106,6 @@ public class Settings extends Fragment {
                 animator.translationX(changeEmailCardView.getWidth());
                 animator.setDuration(500);
                 animator.start();
-
-
-
-
             }
         });
 
@@ -134,9 +152,16 @@ public class Settings extends Fragment {
 
             @Override
             public void onClick(View v){
+
+
+                SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
+                SharedPreferences.Editor dbEditor = db.edit();
+
+
                 boolean goodToSubmit = true;
                 int errorCount = 0;
                 String error = new String();
+                String currentEmailString = retrievedEmailTxt.getText().toString();
                 String newEmailString = newEmailEntered.getText().toString();
 
                 if(!Pattern.matches("[\\w | \\. ]+\\@[\\w | \\. ]+", newEmailString)) {
@@ -158,23 +183,20 @@ public class Settings extends Fragment {
                 }
 
                 if(goodToSubmit){
-                    String retEmail = retrievedEmailTxt.getText().toString();
 
                     /* closes the keyboard **/
                     newEmailEntered.onEditorAction(EditorInfo.IME_ACTION_DONE);
 
-                    final HashMap dictionary = new HashMap<>();
-                    SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor dbEditor = db.edit();
-                    dictionary.putAll(db.getAll());
+                    dbEditor.putString(currentEmailString, newEmailString);
+                    dbEditor.commit();
 
-                    if(dictionary.containsKey(retrievedEmailTxt.getText().toString())){
-                        //dbEditor.putString(newEmailString);
-                        dbEditor.commit();
-                       // dbEditor.putString(user, pass);
-
+                    /* look in run to see the db printed out */
+                    Iterator iter = db.getAll().entrySet().iterator();
+                    while (iter.hasNext()) {
+                        Map.Entry pair = (Map.Entry) iter.next();
+                        //System.out.println("SHould print emails only:" + pair.getKey());
+                        System.out.println("Stuff in db: " + pair);
                     }
-
 
                     Intent reStart = new Intent(getActivity(), MainActivity.class);
                     startActivity(reStart);
@@ -227,9 +249,15 @@ public class Settings extends Fragment {
             @Override
             public void onClick(View v) {
 
+                final HashMap dictionary = new HashMap<>();
+                SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
+                SharedPreferences.Editor dbEditor = db.edit();
+                dictionary.putAll(db.getAll());
+
                 boolean goodToSubmit = true;
                 int errorCount = 0;
                 String error = new String();
+                String currEmail = passEmail.getText().toString();
                 String pass = newPassTxt.getText().toString();
                 String rePass = confirmnewPass.getText().toString();
 
@@ -246,26 +274,32 @@ public class Settings extends Fragment {
                 }
 
                 if (goodToSubmit) {
+                    SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+                    final SharedPreferences.Editor editor = mPrefs.edit();
 
                     /* closes the keyboard **/
                     confirmnewPass.onEditorAction(EditorInfo.IME_ACTION_DONE);
 
-                    final HashMap dictionary = new HashMap<>();
-                    SharedPreferences db = getActivity().getSharedPreferences("database", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor dbEditor = db.edit();
-                    dictionary.putAll(db.getAll());
-
-                    if (dictionary.containsKey(retrievedEmailTxt.getText().toString())) {
-                        //dbEditor.putString(newEmailString);
-                        dbEditor.commit();
-                        // dbEditor.putString(user, pass);
-
-                    }
+                    dbEditor.putString(currEmail, rePass);
+                    dbEditor.commit();
 
 
-                    Intent reStart = new Intent(getActivity(), MainActivity.class);
+                    editor.remove("loggedIn");
+                    editor.putBoolean("loggedIn", false);
+                    editor.apply();
+                    Toast.makeText(getContext(), "Login with new password!", Toast.LENGTH_LONG).show();
+                    Intent reStart = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                     startActivity(reStart);
                     getActivity().finish();
+
+                    /* this prints in the terminal and shows that the password has been updated **/
+                    Iterator iter = db.getAll().entrySet().iterator();
+                    System.out.println("Printing database shared preferencecs");
+                    while (iter.hasNext()) {
+                        Map.Entry pair = (Map.Entry) iter.next();
+                        //System.out.println("Should print emails only:" + pair.getKey());
+                        System.out.println("Stuff in db: " + pair);
+                    }
 
                 }
             }
@@ -299,6 +333,7 @@ public class Settings extends Fragment {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             final SharedPreferences.Editor editor = mPrefs.edit();
+
 
             @Override
             public void onClick(View v) {

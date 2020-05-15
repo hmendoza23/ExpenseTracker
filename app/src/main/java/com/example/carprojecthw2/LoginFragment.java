@@ -45,14 +45,11 @@ public class LoginFragment extends Fragment {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
                 System.out.println("Email: " + user);
-                TextView retrievedEmailTxt = (TextView) v.findViewById(R.id.retrievedEmail);
-                //retrievedEmailTxt.setText("My Awesome Text");
 
 
                 if(dictionary.containsKey(user)){
                     if(dictionary.get(user).toString().equals(pass)){
-                        System.out.println("prints password: " + dictionary.get(user).toString());
-                        //System.out.println("Pass: " + dictionary.get(pass).toString());
+                        //System.out.println("prints password: " + dictionary.get(user).toString());
 
                         editorLog.putBoolean("loggedIn", true);
                         editorLog.commit();
